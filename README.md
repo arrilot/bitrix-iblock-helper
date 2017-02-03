@@ -28,3 +28,7 @@ $filter = ['IBLOCK_ID' => IBLOCKS['articles']];
 // Кэшируем на 30 минут
 define('IBLOCKS', Arrilot\BitrixIblockHelper\IblockHelper::getIblockIdsByCodes(30));
 ```
+
+> Указанный выше синтаксис с массивом констант работает только в php 7.
+> В php 5.6 так использовать константы нельзя, но можно заменить на переменную
+> `$iblocks = Arrilot\BitrixIblockHelper\IblockHelper::getIblockIdsByCodes();`
