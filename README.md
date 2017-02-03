@@ -10,7 +10,7 @@
 
 ```php
 // Один раз задаем глобальную константу-массив.
-const IBLOCKS = Arrilot\BitrixIblockHelper\IblockHelper::getIblockIdsByCodes();
+define('IBLOCKS', Arrilot\BitrixIblockHelper\IblockHelper::getIblockIdsByCodes());
 
 // Затем используем так:
 $filter = ['IBLOCK_ID' => IBLOCKS['other:articles']];

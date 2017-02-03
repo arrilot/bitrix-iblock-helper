@@ -15,13 +15,14 @@ class IblockHelper
             $sql = 'SELECT ID, CODE, IBLOCK_TYPE_ID FROM b_iblock WHERE CODE != ""';
             $dbRes = Application::getConnection()->query($sql);
             while ($i = $dbRes->fetch()) {
-                $iblocks[$i['CODE']] = $i['ID'];
-                $iblocks[$i['IBLOCK_TYPE_ID'].':'.$i['CODE']] = $i['ID'];
+                $id = (int) $i['ID'];
+                $iblocks[$i['CODE']] = $id;
+                $iblocks[$i['IBLOCK_TYPE_ID'].':'.$i['CODE']] = $id;
             }
 
             return $iblocks;
         };
 
-        return $cacheMinutes ? Cache::remember('arrilot_bih_iblock_ids', $cacheMinutes, $callback) : $callback;
+        return $cacheMinutes ? Cache::remember('arrilot_bih_iblock_ids', $cacheMinutes, $callback) : $callback();
     }
 }
