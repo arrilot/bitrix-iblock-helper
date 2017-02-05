@@ -8,27 +8,39 @@
 
 ## Использование
 
+Самый удобный способ использования - добавить в проект следующую функцию-хэлпер
 ```php
-// Один раз задаем глобальную константу-массив на этапе инициализации приложения.
-define('IBLOCKS', Arrilot\BitrixIblockHelper\IblockHelper::getIblockIdsByCodes());
+/**
+ * Получение ID инфоблоку по коду (или по типу:коду).
+ * Помогает вовремя обнаруживать опечатки.
+ *
+ * @param string $code
+ * @return int
+ *
+ * @throws RuntimeException
+ */
+function iblock_id($code)
+{
+    // Запрашиваем данные из базы/кэша только при первом обращениию.
+    static $iblocks = null;
+    if (is_null($iblocks)) {
+        $iblocks = Arrilot\BitrixIblockHelper\IblockHelper::getIblockIdsByCodes();
+    }
 
-// Затем используем так:
-$filter = ['IBLOCK_ID' => IBLOCKS['other:articles']];
-// где `other` - тип инфоблока, `articles` - код.
+    if (!isset($iblocks[$code])) {
+        throw new RuntimeException("Iblock with code '{$code}' was not found in iblock_id()");
+    }
 
-// Или даже так, если код вы считаете уникальным в рамках всех типов инфоблоков:
-$filter = ['IBLOCK_ID' => IBLOCKS['articles']];
+    return $iblocks[$code];
+}
 ```
+
+Допустим у нас инфоблок типа `other` и с символьным кодом `articles`
+Тогда его ID можно получить при помощи одного из вариантов:
+1. `$id = iblock_id('other:articles')` - строгий вариант
+2. `$id = iblock_id('articles')` - более удобный в случае когда коды инфоблоков можно считать уникальными.
 
 В качестве аргумента `IblockHelper::getIblockIdsByCodes()` можно передать число.
-В этом случае результат выборки будет закэширован на указанное количество минут.
+Например, `IblockHelper::getIblockIdsByCodes(30)`
+В этом случае результат выборки будет закэширован на указанное количество минут (30).
 Может быть полезно при очень большом количестве инфоблоков.
-
-```php
-// Кэшируем на 30 минут
-define('IBLOCKS', Arrilot\BitrixIblockHelper\IblockHelper::getIblockIdsByCodes(30));
-```
-
-> Указанный выше синтаксис с массивом констант работает только в php 7.
-> В php 5.6 так использовать константы нельзя, но можно заменить на переменную
-> `$iblocks = Arrilot\BitrixIblockHelper\IblockHelper::getIblockIdsByCodes();`

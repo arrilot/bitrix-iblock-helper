@@ -22,6 +22,8 @@ class IblockHelper
 
             return $iblocks;
         };
+        
+        echo 1;
 
         return $cacheMinutes ? Cache::remember('arrilot_bih_iblock_ids', $cacheMinutes, $callback) : $callback();
     }
