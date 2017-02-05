@@ -11,37 +11,31 @@
 Рекомендуемый способ использования - добавить в проект следующую функцию-хэлпер
 ```php
 /**
- * Получение ID инфоблоку по коду (или по типу:коду).
+ * Получение ID инфоблока по коду (или по коду и типу).
  * Помогает вовремя обнаруживать опечатки.
  *
  * @param string $code
+ * @param string|null $type
  * @return int
  *
  * @throws RuntimeException
  */
-function iblock_id($code)
+function iblock_id($code, $type = null)
 {
-    // Запрашиваем данные из базы/кэша только при первом обращениию.
-    static $iblocks = null;
-    if (is_null($iblocks)) {
-        $iblocks = Arrilot\BitrixIblockHelper\IblockHelper::getIblockIdsByCodes();
-    }
-
-    if (!isset($iblocks[$code])) {
-        throw new RuntimeException("Iblock with code '{$code}' was not found in iblock_id()");
-    }
-
-    return $iblocks[$code];
+    return Arrilot\BitrixIblockHelper\IblockId::getByCode($code, $type);
 }
 ```
 
 Допустим, есть инфоблок типа `other` и с символьным кодом `articles`.
 
 Его ID можно получить при помощи одного из вариантов:
- 1. `$id = iblock_id('other:articles')` - строгий вариант
- 2. `$id = iblock_id('articles')` - более удобный в случае когда коды инфоблоков можно считать уникальными.
+ 1. `$id = iblock_id('articles', 'other')` - строгий вариант
+ 2. `$id = iblock_id('other:articles')` - тоже самое
+ 3. `$id = iblock_id('articles')` - более удобный в случае когда коды инфоблоков можно считать уникальными.
 
-В качестве аргумента `IblockHelper::getIblockIdsByCodes()` можно передать число.
-Например, `IblockHelper::getIblockIdsByCodes(30)`
-В этом случае результат выборки будет закэширован на указанное количество минут (30).
-Может быть полезно при очень большом количестве инфоблоков.
+Независимо от количества вызовов `iblock_id()` запрос в базу будет выполнен только один раз за и получит данные по всем инфоблокам.
+
+Если на проекте создано крайне много инфоблоков, то можно закэшировать этот запрос добавив в `init.php`
+```php
+ Arrilot\BitrixIblockHelper\IblockId::setCacheTime(30); // кэшируем ID всех инфоблоков на 30 минут
+```
