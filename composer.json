@@ -18,7 +18,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Arrilot\\BitrixIblockHelper\\": "src/"
+      "Arrilot\\BitrixIBlockHelper\\": "src/"
     }
   }
 }
