@@ -1,6 +1,6 @@
 <?php
 
-namespace Arrilot\BitrixIBlockHelper;
+namespace Arrilot\BitrixIblockHelper;
 
 use Arrilot\BitrixCacher\Cache;
 use Bitrix\Main\Application;
