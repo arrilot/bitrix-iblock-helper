@@ -1,6 +1,6 @@
 [![Latest Stable Version](https://poser.pugx.org/arrilot/bitrix-iblock-helper/v/stable.svg)](https://packagist.org/packages/arrilot/bitrix-iblock-helper/)
 
-# Хэлперы для упрощения работы с инфоблоками/
+# Хэлперы для упрощения работы с инфоблоками/хайлоадблоками
 
 Данный пакет представляет собой пару классов которые позволяют удобно и производительно получать
 
