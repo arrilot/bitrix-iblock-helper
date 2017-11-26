@@ -43,7 +43,7 @@ class IblockId
         }
 
         if (!isset(static::$values[$code])) {
-            throw new RuntimeException("Iblock with code '{$code}' was not found in iblock_id()");
+            throw new RuntimeException("Iblock with code '{$code}' was not found");
         }
 
         return static::$values[$code];
