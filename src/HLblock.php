@@ -106,7 +106,7 @@ class HLblock
      * $query = new Entity\Query($entity);
      *
      * @param string $table
-     * @return string
+     * @return \Bitrix\Main\Entity\Base
      */
     public static function compileEntity($table)
     {

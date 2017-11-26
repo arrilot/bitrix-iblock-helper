@@ -92,7 +92,7 @@ function highloadblock_class($table)
  * $query = new Entity\Query($entity);
  *
  * @param string $table
- * @return string
+ * @return \Bitrix\Main\Entity\Base
  */
 function highloadblock_entity($table)
 {
