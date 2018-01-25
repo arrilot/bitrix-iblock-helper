@@ -10,12 +10,7 @@ use RuntimeException;
 
 class HLblock
 {
-    /**
-     * Хранилище полученных из базы ID.
-     *
-     * @var array
-     */
-    protected static $values;
+    use Cacheable;
 
     /**
      * Хранилище скомпилированных сущностей для хайлоадблоков.
@@ -25,11 +20,14 @@ class HLblock
     protected static $compiledEntities = [];
 
     /**
-     * Время кэширования списка.
+     * Директория где хранится кэш.
      *
-     * @var float|int
+     * @return string
      */
-    protected static $cacheMinutes = 0;
+    protected static function getCacheDir()
+    {
+        return '/arrilot_bih_hlblock';
+    }
 
     /**
      * Получение данных хайлоадблока по названию его таблицы.
@@ -76,7 +74,9 @@ class HLblock
             return $hlBlocks;
         };
 
-        return static::$cacheMinutes ? Cache::remember('arrilot_bih_hlblocks', static::$cacheMinutes, $callback) : $callback();
+        return static::$cacheMinutes
+            ? Cache::remember('arrilot_bih_hlblocks', static::$cacheMinutes, $callback, static::getCacheDir())
+            : $callback();
     }
     
     /**
@@ -116,15 +116,5 @@ class HLblock
         }
 
         return static::$compiledEntities[$table];
-    }
-
-    /**
-     * Setter for $cacheMinutes
-     *
-     * @param $minutes
-     */
-    public static function setCacheTime($minutes)
-    {
-        static::$cacheMinutes = $minutes;
     }
 }

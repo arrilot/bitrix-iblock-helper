@@ -8,19 +8,17 @@ use RuntimeException;
 
 class IblockId
 {
+    use Cacheable;
+
     /**
-     * Хранилище полученных из базы ID.
+     * Директория где хранится кэш.
      *
-     * @var array
+     * @return string
      */
-    protected static $values;
-    
-    /**
-     * Время кэширования списка.
-     *
-     * @var float|int
-     */
-    protected static $cacheMinutes = 0;
+    protected static function getCacheDir()
+    {
+        return '/arrilot_bih_iblock_id';
+    }
 
     /**
      * Получение ID инфоблока по коду (или по коду и типу).
@@ -48,7 +46,7 @@ class IblockId
 
         return static::$values[$code];
     }
-    
+
     /**
      * Получение ID всех инфоблоков из БД/кэша.
      *
@@ -70,16 +68,8 @@ class IblockId
             return $iblocks;
         };
 
-        return static::$cacheMinutes ? Cache::remember('arrilot_bih_iblock_ids', static::$cacheMinutes, $callback) : $callback();
-    }
-
-    /**
-     * Setter for $cacheMinutes
-     *
-     * @param $minutes
-     */
-    public static function setCacheTime($minutes)
-    {
-        static::$cacheMinutes = $minutes;
+        return static::$cacheMinutes
+            ? Cache::remember('arrilot_bih_iblock_ids', static::$cacheMinutes, $callback, static::getCacheDir())
+            : $callback();
     }
 }
