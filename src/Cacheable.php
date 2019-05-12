@@ -34,7 +34,6 @@ trait Cacheable
      * Setter for $cacheTtl
      *
      * @param $seconds
-     
      */
     public static function setCacheTime($seconds)
     {
