@@ -114,8 +114,8 @@ function highloadblock_entity($table)
 Для включения необходимо добавить в `init.php` (или куда-то туда):
 
 ```php
-IblockId::setCacheTime(30); // кэшируем ID всех инфоблоков на 30 минут
-HLblock::setCacheTime(30); // кэшируем данные всех хайлоадблоков на 30 минут
+IblockId::setCacheTime(30 * 60); // кэшируем ID всех инфоблоков на 30 минут
+HLblock::setCacheTime(30 * 60); // кэшируем данные всех хайлоадблоков на 30 минут
 ```
 
 #### Сброс кэша
