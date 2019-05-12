@@ -14,11 +14,11 @@ trait Cacheable
     protected static $values;
 
     /**
-     * Время кэширования списка.
+     * Время кэширования списка в секундах.
      *
      * @var float|int
      */
-    protected static $cacheMinutes = 0;
+    protected static $cacheTtl = 0;
 
     /**
      * Директория где хранится кэш.
@@ -31,13 +31,14 @@ trait Cacheable
     }
 
     /**
-     * Setter for $cacheMinutes
+     * Setter for $cacheTtl
      *
-     * @param $minutes
+     * @param $seconds
+     
      */
-    public static function setCacheTime($minutes)
+    public static function setCacheTime($seconds)
     {
-        static::$cacheMinutes = $minutes;
+        static::$cacheTtl = $seconds;
     }
 
     /**
