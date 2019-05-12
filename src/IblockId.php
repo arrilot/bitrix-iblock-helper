@@ -68,8 +68,8 @@ class IblockId
             return $iblocks;
         };
 
-        return static::$cacheMinutes
-            ? Cache::remember('arrilot_bih_iblock_ids', static::$cacheMinutes, $callback, static::getCacheDir())
+        return static::$cacheTtl
+            ? Cache::remember('arrilot_bih_iblock_ids', static::$cacheTtl, $callback, static::getCacheDir())
             : $callback();
     }
 }
