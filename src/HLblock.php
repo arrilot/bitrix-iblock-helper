@@ -74,8 +74,8 @@ class HLblock
             return $hlBlocks;
         };
 
-        return static::$cacheMinutes
-            ? Cache::remember('arrilot_bih_hlblocks', static::$cacheMinutes, $callback, static::getCacheDir())
+        return static::$cacheTtl
+            ? Cache::remember('arrilot_bih_hlblocks', static::$cacheTtl, $callback, static::getCacheDir())
             : $callback();
     }
     
