@@ -14,7 +14,7 @@
   "homepage": "https://github.com/arrilot/bitrix-iblock-helper",
   "require": {
     "php": ">=5.6.4",
-    "arrilot/bitrix-cacher": "~1 || ~2"
+    "arrilot/bitrix-cacher": "~1 || ~2 || ~3"
   },
   "autoload": {
     "psr-4": {
